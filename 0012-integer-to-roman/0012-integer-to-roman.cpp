@@ -22,7 +22,7 @@ public:
         string outputString = "";
                       
         for(int i = 0; i < storeDeno.size(); i ++){
-            cout << leftOverNum << endl;
+
             if(leftOverNum == 0)break;
             bool checkSpecial = false;
             divNum = leftOverNum/storeDeno[i].first;
@@ -30,8 +30,6 @@ public:
             
             leftOverNum = num % storeDeno[i].first;
             
-            //cout << divNum << endl;
-            //cout << checkNum << endl;
             if(divNum == 0)continue;
             
             for(int k = 0; k < storeSpecialCase.size(); k ++){
@@ -44,7 +42,6 @@ public:
                     leftOverNum = checkNum - storeSpecialCase[k].first * 9;
                     checkSpecial = true;
                     i++;
-                    //cout<<leftOverNum << endl;
                     break;
                 }
                 else if(checkNum/storeSpecialCase[k].first == 4){
