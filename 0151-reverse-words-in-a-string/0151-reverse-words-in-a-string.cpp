@@ -8,39 +8,38 @@ public:
 	stack<string> saveS;
     bool lastInclude = true;
     
-    if(s[s.length()-1] == ' '){
-        lastInclude = false;
-    }
+   	 if(s[s.length()-1] == ' '){
+        	lastInclude = false;
+         
+   	 }
+        
 	for(int i = 0; i < s.length(); i ++){
 
-        if(i == s.length() -1 && newWord == true){
-            start = i;
+        if(i == s.length() -1 ){
+            if(lastInclude == false)break;
+            if(newWord == true)start = i;
+            
             newWord = false;
+            //cout << saveS.top() << endl;
+            i++;
         }
 	
-		if(s[i] == ' ' || i == s.length()-1){
+	    if(s[i] == ' ' || i == s.length()){
            
-            if(i == s.length()-1 && lastInclude){
-                i++;
+            if(newWord == false){
+                string subS = s.substr(start, i - start);
+                //cout << subS << endl;
+                saveS.push(subS);
+            }
+            newWord = true;
 
-            } else if(i == s.length()-1 && !lastInclude)break;
-            
 
-            
-			if(newWord == false){
-				string subS = s.substr(start, i - start);
-                
-				saveS.push(subS);
-			}
-			newWord = true;
-						
-
-		}else{
-			if(newWord == true){
-				start = i;
+        }else{
+            if(newWord == true){
+                start = i;
                 newWord = false;
-			}
-		}
+            }
+        }
 		
 	}
         
