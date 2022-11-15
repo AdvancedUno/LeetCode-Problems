@@ -2,34 +2,39 @@ class Solution {
 public:
     int countNodes(TreeNode* root) {
     
-    if(root == nullptr)return 0;
-	queue<TreeNode*> saveNodes;
-	int cntNodes = 0;
+    	if(root == nullptr)return 0;
 
-	saveNodes.push(root);
+	int cntNodes = Recursion(root, 0);
+
 	
 
-	while(saveNodes.size() > 0){
-		cntNodes++;
-		TreeNode * currentNode = saveNodes.front();
 
-		if(currentNode->left != nullptr){
-			saveNodes.push(currentNode->left);
-		}
-
-		if(currentNode->right != nullptr){
-			saveNodes.push(currentNode->right);
-		}
-
-        saveNodes.pop();
-        
-
-	}
 
 	return cntNodes;
 
 
-
-
     }
+
+	int Recursion(TreeNode* currentNode, int numNodes){
+		 
+
+		if(currentNode->left == nullptr){
+			numNodes ++;
+			return numNodes;
+		}
+		
+		numNodes = Recursion(currentNode->left, numNodes);
+
+		if(currentNode->right == nullptr){
+			numNodes ++;
+			return numNodes;
+		}
+		numNodes = Recursion(currentNode->right, numNodes);
+        numNodes++;
+
+		return numNodes;
+
+	}
+
+
 };
