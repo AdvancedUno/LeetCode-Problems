@@ -1,44 +1,37 @@
-class RandomizedSet {
+class RandomizedSet 
+{
+    unordered_map<int,int> vals;
+    vector<int>            idxs;
+
 public:
-    unordered_map<int, bool> valSet;
-
-    RandomizedSet() {
-        
+    RandomizedSet() {}
+    
+    bool insert(int val) 
+    {
+        if (vals.count(val)) return false;
+        vals[val] = idxs.size();
+        idxs.push_back(val);
+        return true;
     }
     
-    bool insert(int val) {
-        if(valSet.find(val) == valSet.end()){
-            valSet.insert(make_pair(val,true));    
-            return true;
-        }else return false;
+    bool remove(int val)
+    {
+        if (!vals.count(val)) return false;
         
-
+        int lst = idxs.back();
+        int pos = vals[val];
+        
+        vals[lst] = pos;
+        idxs[pos] = lst;
+        
+        vals.erase(val);
+        idxs.pop_back();
+        
+        return true;
     }
     
-    bool remove(int val) {
-        if(valSet.find(val) != valSet.end()){
-            valSet.erase(val); 
-            return true;
-        }else return false;
+    int getRandom() 
+    {
+        return idxs[rand() % idxs.size()];
     }
-    
-    
-        
-    int getRandom() {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<int> dis(0, valSet.size()-1);
-        
-        //return valSet[dis(gen)];
-        int i = dis(gen);
-        for (auto& it: valSet) {
-            if(i == 0){
-                return it.first;
-            }
-            i--;
-        }
-        return 0;
-    }
-    
 };
-
