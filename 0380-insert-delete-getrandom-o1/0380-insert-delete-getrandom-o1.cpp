@@ -1,31 +1,27 @@
 class RandomizedSet {
 public:
-    vector<int> valSet;
+    unordered_map<int, bool> valSet;
 
     RandomizedSet() {
         
     }
     
     bool insert(int val) {
-        auto it = find(valSet.begin(), valSet.end(), val);
-        if (it == valSet.end()) {
-            valSet.push_back(val);
+        if(valSet.find(val) == valSet.end()){
+            valSet.insert(make_pair(val,true));    
             return true;
-        }
-        else {
-            return false;
-        }
+        }else return false;
+        
+
     }
     
     bool remove(int val) {
-        std::vector<int>::iterator position = std::find(valSet.begin(), valSet.end(), val);
-        if (position != valSet.end()) {
-            valSet.erase(position);
+        if(valSet.find(val) != valSet.end()){
+            valSet.erase(val); 
             return true;
-        }else{
-            return false;
-        }
+        }else return false;
     }
+    
     
         
     int getRandom() {
@@ -33,7 +29,15 @@ public:
         std::mt19937 gen(rd());
         std::uniform_int_distribution<int> dis(0, valSet.size()-1);
         
-        return valSet[dis(gen)];
+        //return valSet[dis(gen)];
+        int i = dis(gen);
+        for (auto& it: valSet) {
+            if(i == 0){
+                return it.first;
+            }
+            i--;
+        }
+        return 0;
     }
     
 };
