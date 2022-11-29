@@ -1,24 +1,16 @@
-class Solution {
+class Solution 
+{
 public:
-    string makeGood(string s) {
-        bool checkOK = false;
-        bool checkStatus = true;
-        while(!checkOK){
-            checkStatus = true;
-            if(s.length() < 1)break;
-            for(int i = 0; i < s.length()-1; i ++)
-            {
-                if(abs(s[i] - s[i+1]) == 32 ){
-                    s = s.erase(i, 2);
-                    checkStatus = false;
-                    break;
-                }
-            }
-            if(checkStatus )break;
-        }
-        return s;
+    string makeGood(string s) 
+    {
+        string ss;
         
+        for (char c : s)
+            if (!ss.empty() && (ss.back() ^ c) == 32)  
+                ss.pop_back();             
+            else                          
+                ss.push_back(c);            
         
-        
+        return ss;
     }
 };
