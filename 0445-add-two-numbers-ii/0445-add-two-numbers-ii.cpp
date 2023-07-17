@@ -1,114 +1,47 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
 class Solution {
 public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* prev = NULL;
+
+        while(head) {
+            ListNode* nxt = head->next;
+            head->next = prev;
+            prev = head;
+            head = nxt;
+        }
+        return prev;
+    }
+
+    ListNode* Helper(ListNode* l1, ListNode* l2) {
+        ListNode* dummyHead = new ListNode(0);
+        ListNode* tail = dummyHead;
+        int carry = 0;
+
+        while (l1 != nullptr || l2 != nullptr || carry != 0) {
+            int digit1 = (l1 != nullptr) ? l1->val : 0;
+            int digit2 = (l2 != nullptr) ? l2->val : 0;
+
+            int sum = digit1 + digit2 + carry;
+            int digit = sum % 10;
+            carry = sum / 10;
+
+            ListNode* newNode = new ListNode(digit);
+            tail->next = newNode;
+            tail = tail->next;
+
+            l1 = (l1 != nullptr) ? l1->next : nullptr;
+            l2 = (l2 != nullptr) ? l2->next : nullptr;
+        }
+
+        ListNode* result = dummyHead->next;
+        delete dummyHead;
+        return result;
+    }
+
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        
-        ListNode* first = l1;
-        ListNode* second = l2;
-        
- 
-
-        int firstNum =0;
-        int secondNum = 0;
-        
-        vector<int>firstStore;
-        vector<int>secondStore;
-        
-        while(first != nullptr){
-            
-            firstStore.push_back(first->val);
-            
-            first = first->next;
-        }
-        
-        while(second != nullptr){
-            
-            secondStore.push_back(second->val);
-            
-            second = second->next;
-        }
-        
-        int maxNum = max(firstStore.size(), secondStore.size());
-        ListNode* temp = new ListNode();
-        ListNode* move = temp;
-        int leftover = 0;
-        ListNode* tempX ;
-        for(int i= 0; i < maxNum; i ++){
-            tempX = new ListNode();
-
-            if(secondStore.size() > i && firstStore.size() > i){
-                int num = secondStore[secondStore.size()-i-1] +firstStore[firstStore.size()-i-1] + leftover;
-                leftover = num /10;
-                tempX->val = num%10;
-                
-            }
-            
-            else if(firstStore.size() > i){
-                
-                int num = firstStore[firstStore.size()-i-1] + leftover;
-                leftover = num /10;
-                tempX->val = num%10;
-            }else{
-                
-                int num = secondStore[secondStore.size()-i-1] + leftover;
-                leftover = num /10;
-                tempX->val = num%10;
-            }
-           cout << tempX->val << endl;
-            move -> next = tempX;
-            move = tempX;
-
-        }
-
-        if(leftover >0){
-            tempX = new ListNode();
-            tempX->val =leftover;
-            move -> next = tempX;
-            move = tempX;
-        }
-
-        temp = reverseList(temp);
-
-
-        
-        return temp;
-        
-        
-        
-      
-        
+        l1 = reverseList(l1);
+        l2 = reverseList(l2);
+        ListNode* ans = Helper(l1, l2);
+        return reverseList(ans);
     }
-
-    ListNode * Reverse(ListNode* current){
-        if(current ->next == nullptr)return current;
-        Reverse(current)->next = current;
-        return current;
-    }
-    
-  ListNode* reverseList(ListNode* head) {
-    ListNode* prev = nullptr;
-    ListNode* current = head->next;
-
-    while (current != nullptr) {
-        ListNode* nextTemp = current->next;
-        current->next = prev;
-        prev = current;
-        current = nextTemp;
-    }
-
-    return prev;
-}
-
-
-    
-    
 };
