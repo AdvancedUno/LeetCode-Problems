@@ -7,12 +7,7 @@ public:
 
 		// create stack to save and track asteroid
 		stack<int> storeStack;
-		if(asteroids.size() < 1){
-			vector<int> temp;
-			return temp;
 
-
-		}
 
 		if(asteroids.size() == 1){
 			vector<int> temp;
